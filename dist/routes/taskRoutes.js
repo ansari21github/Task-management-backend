@@ -17,7 +17,6 @@ const Task_1 = __importDefault(require("../models/Task"));
 const authenticate_1 = require("../middlewares/authenticate");
 const router = express_1.default.Router();
 // Create a task
-// Create a task
 router.post('/', authenticate_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, description } = req.body;
     try {
@@ -94,6 +93,7 @@ router.get('/completed', authenticate_1.authenticateToken, (req, res) => __await
     try {
         const tasks = yield Task_1.default.findAll({
             where: {
+                user_id: req.user.id,
                 status: true, // Fetch tasks where status is true
             },
         });
@@ -108,6 +108,7 @@ router.get('/pending', authenticate_1.authenticateToken, (req, res) => __awaiter
     try {
         const tasks = yield Task_1.default.findAll({
             where: {
+                user_id: req.user.id,
                 status: false, // Fetch tasks where status is false
             },
         });

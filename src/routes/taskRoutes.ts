@@ -5,7 +5,6 @@ import { authenticateToken } from '../middlewares/authenticate';
 const router = express.Router();
 
 // Create a task
-// Create a task
 router.post('/', authenticateToken, async (req: any, res: any) => {
     const { title, description } = req.body;
     try {
@@ -85,6 +84,7 @@ router.get('/completed', authenticateToken, async (req: any, res: any) => {
     try {
         const tasks = await Task.findAll({
             where: {
+                user_id: req.user.id,
                 status: true, // Fetch tasks where status is true
             },
         });
@@ -99,6 +99,7 @@ router.get('/pending', authenticateToken, async (req: any, res: any) => {
     try {
         const tasks = await Task.findAll({
             where: {
+                user_id: req.user.id,
                 status: false, // Fetch tasks where status is false
             },
         });
